@@ -45,15 +45,24 @@ export class Name {
      * The control characters in the data string are the default characters
      */
     public asDataString(): string {
-         return this.components.join(DEFAULT_DELIMITER);
+         return this.components.map( c => 
+            c.split(ESCAPE_CHARACTER).join(ESCAPE_CHARACTER + ESCAPE_CHARACTER)
+             .split(this.delimiter).join(ESCAPE_CHARACTER + this.delimiter)
+         ).join(this.delimiter);    
     }
 
     public getComponent(i: number): string {
+        if (i >= 0 && i < this.components.length) {
+            throw new Error('Not implemented yet');
+        }
         return this.components[i];
     }
 
     /** Expects that new Name component c is properly masked */
     public setComponent(i: number, c: string): void {
+        if (i >= 0 && i < this.components.length) {
+            throw new Error('Not implemented yet');
+        }
         this.components[i] = c;
     }
 
@@ -64,7 +73,9 @@ export class Name {
 
     /** Expects that new Name component c is properly masked */
     public insert(i: number, c: string): void {
-        this.components.splice(i, 0, c);
+        if (i >= 0 && i <= this.components.length) {
+            this.components.splice(i, 0, c);
+        }
     }
 
     /** Expects that new Name component c is properly masked */
@@ -73,7 +84,10 @@ export class Name {
     }
 
     public remove(i: number): void {
-        this.components.splice(i, 1);
+        if (i >= 0 && i < this.components.length) {
+            throw new Error('Not implemented yet');
+        }       
+        this
     }
 
 }
